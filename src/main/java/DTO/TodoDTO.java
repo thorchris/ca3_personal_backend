@@ -21,5 +21,4 @@ public class TodoDTO {
      public void setTodText(String todoText){
          this.todoText = todoText;
      }
-    
 }
