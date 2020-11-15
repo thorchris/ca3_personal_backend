@@ -81,6 +81,14 @@ public class UserResource {
         
         return "User added";
     }
+    
+        @GET
+        @Path("/populate")
+        @Produces({MediaType.APPLICATION_JSON})
+        public String populate() {
+            UserFacade.getUserFacade(EMF).populateDB();
+            return "{\"msg\":\"3 rows added\"}";
+    }
   
     
 }

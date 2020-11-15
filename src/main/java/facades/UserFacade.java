@@ -1,6 +1,7 @@
 package facades;
 
 import entities.Role;
+import entities.Todo;
 import entities.User;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -84,6 +85,35 @@ public class UserFacade {
         } finally{
             em.close(); 
         } 
+    }
+
+    public void populateDB() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            User user = new User("user", "kode123");
+            User admin = new User("admin", "kodeord");
+            User both = new User("user_admin", "kodetest");
+
+            if (admin.getUserPass().equals("test") || user.getUserPass().equals("test") || both.getUserPass().equals("test")) {
+                throw new UnsupportedOperationException("You have not changed the passwords");
+            }
+
+            em.getTransaction().begin();
+            Role userRole = new Role("user");
+            Role adminRole = new Role("admin");
+            user.addRole(userRole);
+            admin.addRole(adminRole);
+            both.addRole(userRole);
+            both.addRole(adminRole);
+            em.persist(userRole);
+            em.persist(adminRole);
+            em.persist(user);
+            em.persist(admin);
+            em.persist(both);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
       
     
